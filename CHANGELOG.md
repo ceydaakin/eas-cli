@@ -9,6 +9,7 @@ This is the log of notable changes to EAS CLI and related packages.
 ### 🎉 New features
 
 - [eas-build-job] Add an `uploadArtifact` command to the sandbox daemon protocol. ([#4562](https://github.com/expo/eas-cli/pull/4562) by [@AHGIJMKLKKZNPJKQR](https://github.com/AHGIJMKLKKZNPJKQR))
+- [build-tools] Let connected sandboxes upload files as sandbox artifacts through the Expo MCP server. ([#4563](https://github.com/expo/eas-cli/pull/4563) by [@AHGIJMKLKKZNPJKQR](https://github.com/AHGIJMKLKKZNPJKQR))
 
 ### 🐛 Bug fixes
 

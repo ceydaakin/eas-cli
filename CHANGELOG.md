@@ -8,6 +8,8 @@ This is the log of notable changes to EAS CLI and related packages.
 
 ### 🎉 New features
 
+- [eas-cli][local-build-plugin] Deprecate Node.js 20, and print a warning when running on it. A future release will require Node.js 22 or newer. Development and CI now use Node.js 22. ([#4579](https://github.com/expo/eas-cli/pull/4579) by [@douglowder](https://github.com/douglowder))
+
 ### 🐛 Bug fixes
 
 ### 🧹 Chores

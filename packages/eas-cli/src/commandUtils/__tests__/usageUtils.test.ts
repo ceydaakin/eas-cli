@@ -167,6 +167,22 @@ function createMockFullUsageData(
             : [],
         totalCost: updateOverageCost,
       },
+      EAS_SIMULATOR: {
+        __typename: 'UsageMetricTotal',
+        id: 'simulator-metric-id',
+        billingPeriod: {
+          __typename: 'BillingPeriod',
+          id: 'billing-period-id',
+          start: startOfMonth.toISOString(),
+          end: endOfMonth.toISOString(),
+          anchor: startOfMonth.toISOString(),
+        },
+        planMetrics: [],
+        overageMetrics: [],
+        totalCost: 0,
+      },
+      IOS_SIMULATOR_MINUTES: [],
+      ANDROID_SIMULATOR_MINUTES: [],
     },
   };
 }

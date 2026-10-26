@@ -3,6 +3,7 @@ import spawnAsync from '@expo/spawn-async';
 import chalk from 'chalk';
 import { boolish } from 'getenv';
 import type { CommonSpawnOptions } from 'node:child_process';
+import path from 'path';
 import resolveFrom, { silent as silentResolveFrom } from 'resolve-from';
 import semver from 'semver';
 
@@ -20,6 +21,16 @@ function gteSdkVersion(fromSdkVersion: string, sdkVersion: string): boolean {
   } catch {
     return true;
   }
+}
+
+/**
+ * Resolve a module from `@expo/cli` the way `expo/bin/cli` does: from the `expo` package.
+ * npm can nest `@expo/cli` under `node_modules/expo/node_modules`, where the project root can't see it.
+ */
+function resolveExpoCliModule(projectDir: string, request: string): string | undefined {
+  const expoPackageJsonPath = resolveFrom.silent(projectDir, 'expo/package.json');
+  const fromDir = expoPackageJsonPath ? path.dirname(expoPackageJsonPath) : projectDir;
+  return resolveFrom.silent(fromDir, request);
 }
 
 /**
@@ -54,7 +65,7 @@ export function shouldUseVersionedExpoCLIExpensive(
   }
 
   // Finally ensure the CLI is available for sanity.
-  return !!resolveFrom.silent(projectDir, '@expo/cli');
+  return !!resolveExpoCliModule(projectDir, '@expo/cli');
 }
 
 /**
@@ -65,7 +76,7 @@ export function shouldUseVersionedExpoCLIExpensive(
 export function shouldUseVersionedExpoCLIWithExplicitPlatformsExpensive(
   projectDir: string
 ): boolean {
-  const expoCliPath = resolveFrom.silent(projectDir, '@expo/cli/package.json');
+  const expoCliPath = resolveExpoCliModule(projectDir, '@expo/cli/package.json');
   if (!expoCliPath) {
     return false;
   }

@@ -43,7 +43,11 @@ describe(shouldUseVersionedExpoCLIExpensive, () => {
   });
 
   it(`returns false if versioned CLI isn't installed`, () => {
-    jest.mocked(resolveFrom.silent).mockImplementationOnce(() => undefined);
+    // `expo` resolves, `@expo/cli` does not.
+    jest
+      .mocked(resolveFrom.silent)
+      .mockImplementationOnce(() => '/path/to/expo/package.json')
+      .mockImplementationOnce(() => undefined);
     expect(shouldUseVersionedExpoCLIExpensive('/', DEFAULT_CONFIG)).toBe(false);
   });
 
